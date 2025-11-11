@@ -21,6 +21,34 @@ function handleTopNavAnimation() {
 	}
 }
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    var el = document.getElementById('testimonialsCarousel');
+    if (!el || !window.jQuery) return;
+  
+    // Initialize (in case data- attributes are missing)
+    jQuery(el).carousel({
+      interval: 5500,
+      pause: 'hover'
+    });
+  
+    // Touch swipe
+    var startX = 0;
+    el.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX;
+    }, { passive: true });
+  
+    el.addEventListener('touchmove', function (e) {
+      if (!startX) return;
+      var x = e.touches[0].clientX;
+      var diff = startX - x;
+      if (Math.abs(diff) > 50) {
+        jQuery(el).carousel(diff > 0 ? 'next' : 'prev');
+        startX = 0;
+      }
+    }, { passive: true });
+  });
+  
 /*
  * Registration Form
 */
